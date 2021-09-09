@@ -1,0 +1,66 @@
+# Copyright (C) 2021 SuperAdmin
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#
+# Generic
+#
+
+# Module label 'ModuleSms77Name'
+ModuleSms77Name = Sms77
+# Module description 'ModuleSms77Desc'
+ModuleSms77Desc = Sms77 description
+
+#
+# Admin page
+#
+Sms77Setup = Sms77 setup
+Settings = Settings
+Sms77SetupPage = Sms77 setup page
+SMS77_API_KEY = API Key
+SMS77_API_KEYTooltip = Required for sending messages
+MissingOptions = Please submit the following required options before proceeding:
+
+
+#
+# About page
+#
+About = About
+Sms77About = About Sms77
+Sms77AboutPage = Sms77 about page
+
+#
+# Sample page
+#
+Debug = Debug
+Flash = Flash
+ForeignId = Foreign ID
+From = From
+Label = Label
+MessageTypeSms = SMS
+MessageTypeVoice = Text-To-Speech
+MyPageName = My page name
+NoReload = No Reload
+NoUsersWithMobileFound = No users matching the configuration has a mobile phone associated.
+PerformanceTracking = Performance tracking
+SelectMessageType = Select a message type
+Send = Send message
+Text = Message text
+XML = XML
+
+#
+# Sample widget
+#
+MyWidget = My widget
+MyWidgetDescription = My widget description
