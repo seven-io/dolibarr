@@ -20,25 +20,25 @@
 # Module label 'ModuleSms77Name'
 ModuleSms77Name = sms77
 # Module description 'ModuleSms77Desc'
-ModuleSms77Desc = Send SMS and make text-to-speech calls
+ModuleSms77Desc = SMS versenden und Text-zu-Sprachanrufe tätigen
 
 #
 # Admin page
 #
-Sms77Setup = sms77 setup
-Settings = Settings
-Sms77SetupPage = sms77 setup page
-SMS77_API_KEY = API Key
-SMS77_API_KEYTooltip = Required for sending messages
-MissingOptions = Please submit the following required options before proceeding:
+Sms77Setup = sms77 Setup
+Settings = Einstellungen
+Sms77SetupPage = sms77 Setup-Seite
+SMS77_API_KEY = API-Schlüssel
+SMS77_API_KEYTooltip = Erforderlich für Nachrichtenversand
+MissingOptions = Bitte die folgenden erforderlichen Optionen ausfüllen um fortfahren zu können:
 
 
 #
 # About page
 #
-About = About
-Sms77About = About sms77
-Sms77AboutPage = sms77 about page
+About = Über
+Sms77About = Über sms77
+Sms77AboutPage = sms77 "Über"-Seite
 
 #
 # Sample page
@@ -46,14 +46,14 @@ Sms77AboutPage = sms77 about page
 Debug = Debug
 Flash = Flash
 ForeignId = Foreign ID
-From = From
+From = Absender
 Label = Label
 MessageTypeSms = SMS
-MessageTypeVoice = Text-To-Speech
-NoReload = No Reload
-NoUsersWithMobileFound = No users matching the configuration has a mobile phone associated.
-PerformanceTracking = Performance tracking
-SelectMessageType = Select a message type
-Send = Send message
-Text = Message text
+MessageTypeVoice = Text-zu-Sprachanruf
+NoReload = Duplikate erlauben
+NoUsersWithMobileFound = Keine Nutzer mit Mobilfunknummer gefunden mit der gegebenen Konfiguration.
+PerformanceTracking = Performance Tracking
+SelectMessageType = Nachrichtentyp auswählen
+Send = Nachricht versenden
+Text = Nachrichtinhalt
 XML = XML
