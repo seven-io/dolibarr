@@ -1,4 +1,4 @@
-# sms77 FOR [DOLIBARR ERP CRM](https://www.dolibarr.org)
+# seven FOR [DOLIBARR ERP CRM](https://www.dolibarr.org)
 
 ## Features
 
@@ -52,11 +52,11 @@ Note: If this screen tell you there is no custom directory, check your setup is 
 
 ### From a GIT repository
 
-- Clone the repository in ```$dolibarr_main_document_root_alt/sms77```
+- Clone the repository in ```$dolibarr_main_document_root_alt/seven```
 
 ```sh
 cd ....../custom
-git clone git@github.com:sms77io/dolibarr.git sms77
+git clone git@github.com:seven-io/dolibarr.git seven
 ```
 
 ### <a name="final_steps"></a>Final steps

@@ -1,4 +1,4 @@
-# CHANGELOG sms77 FOR [DOLIBARR ERP CRM](https://www.dolibarr.org)
+# CHANGELOG seven FOR [DOLIBARR ERP CRM](https://www.dolibarr.org)
 
 ## 1.0
 

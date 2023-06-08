@@ -19,18 +19,18 @@
  */
 
 /**
- *    \defgroup   sms77     Module Sms77
- *  \brief      Sms77 module descriptor.
- *  \file       htdocs/sms77/core/modules/modSms77.class.php
- *  \ingroup    sms77
- *  \brief      Description and activation file for module Sms77
+ *    \defgroup   seven     Module Seven
+ *  \brief      Seven module descriptor.
+ *  \file       htdocs/seven/core/modules/modSeven.class.php
+ *  \ingroup    seven
+ *  \brief      Description and activation file for module Seven
  */
 include_once DOL_DOCUMENT_ROOT . '/core/modules/DolibarrModules.class.php';
 
 /**
- *  Description and activation class for module Sms77
+ *  Description and activation class for module Seven
  */
-class modSms77 extends DolibarrModules {
+class modSeven extends DolibarrModules {
     /**
      * Constructor. Define names, constants, directories, boxes, permissions
      * @param DoliDB $db Database handler
@@ -44,7 +44,7 @@ class modSms77 extends DolibarrModules {
         $this->numero = 500000; // TODO Go on page https://wiki.dolibarr.org/index.php/List_of_modules_id to reserve an id number for your module
 
         // Key text used to identify module (for permissions, menus, etc...)
-        $this->rights_class = 'sms77';
+        $this->rights_class = 'seven';
 
         // Family can be 'base' (core modules),'crm','financial','hr','projects','products','ecm','technic' (transverse modules),'interface' (link with external tools),'other','...'
         // It is used to group modules by family in module setup page
@@ -55,24 +55,24 @@ class modSms77 extends DolibarrModules {
 
         // Gives the possibility for the module, to provide his own family info and position of this family (Overwrite $this->family and $this->module_position. Avoid this)
         //$this->familyinfo = array('myownfamily' => array('position' => '01', 'label' => $langs->trans("MyOwnFamily")));
-        // Module label (no space allowed), used if translation string 'ModuleSms77Name' not found (Sms77 is name of module).
+        // Module label (no space allowed), used if translation string 'ModuleSevenName' not found (Seven is name of module).
         $this->name = preg_replace('/^mod/i', '', get_class($this));
 
-        // Module description, used if translation string 'ModuleSms77Desc' not found (Sms77 is name of module).
-        $this->description = "Sms77Description";
+        // Module description, used if translation string 'ModuleSevenDesc' not found (Seven is name of module).
+        $this->description = "SevenDescription";
         // Used only if file README.md and README-LL.md not found.
-        $this->descriptionlong = "Sms77Description";
+        $this->descriptionlong = "SevenDescription";
 
         // Author
-        $this->editor_name = 'sms77 e.K.';
-        $this->editor_url = 'https://www.sms77.io';
+        $this->editor_name = 'seven communications GmbH & Co. KG';
+        $this->editor_url = 'https://www.seven.io';
 
         // Possible values for version are: 'development', 'experimental', 'dolibarr', 'dolibarr_deprecated' or a version string like 'x.y.z'
         $this->version = '1.0';
         // Url to the file with your last numberversion of this module
         //$this->url_last_version = 'http://www.example.com/versionmodule.txt';
 
-        // Key used in llx_const table to save module status enabled/disabled (where SMS77 is value of property name of module in uppercase)
+        // Key used in llx_const table to save module status enabled/disabled (where SEVEN is value of property name of module in uppercase)
         $this->const_name = 'MAIN_MODULE_' . strtoupper($this->name);
 
         // Name of image file used for this module.
@@ -121,11 +121,11 @@ class modSms77 extends DolibarrModules {
         ];
 
         // Data directories to create when module is enabled.
-        // Example: this->dirs = array("/sms77/temp","/sms77/subdir");
-        $this->dirs = ["/sms77/temp"];
+        // Example: this->dirs = array("/seven/temp","/seven/subdir");
+        $this->dirs = ["/seven/temp"];
 
-        // Config pages. Put here list of php page, stored into sms77/admin directory, to use to setup module.
-        $this->config_page_url = ["setup.php@sms77"];
+        // Config pages. Put here list of php page, stored into seven/admin directory, to use to setup module.
+        $this->config_page_url = ["setup.php@seven"];
 
         // Dependencies
         // A condition to hide module
@@ -136,7 +136,7 @@ class modSms77 extends DolibarrModules {
         $this->conflictwith = []; // List of module class names as string this module is in conflict with. Example: array('modModuleToDisable1', ...)
 
         // The language file dedicated to your module
-        $this->langfiles = ["sms77@sms77"];
+        $this->langfiles = ["seven@seven"];
 
         // Prerequisites
         $this->phpmin = [5, 5]; // Minimum version of PHP required by module
@@ -148,9 +148,9 @@ class modSms77 extends DolibarrModules {
 
         $this->const = [];
 
-        if (!isset($conf->sms77) || !isset($conf->sms77->enabled)) {
-            $conf->sms77 = new stdClass();
-            $conf->sms77->enabled = 0;
+        if (!isset($conf->seven) || !isset($conf->seven->enabled)) {
+            $conf->seven = new stdClass();
+            $conf->seven->enabled = 0;
         }
 
         // Array to add new pages in new tabs
@@ -161,7 +161,7 @@ class modSms77 extends DolibarrModules {
         $this->dictionaries = [];
 
         // Boxes/Widgets
-        // Add here list of php file(s) stored in sms77/core/boxes that contains a class to show a widget.
+        // Add here list of php file(s) stored in seven/core/boxes that contains a class to show a widget.
         $this->boxes = [];
 
         // Cronjobs (List of cron jobs entries to add when module is enabled)
@@ -174,19 +174,19 @@ class modSms77 extends DolibarrModules {
         // Add here entries to declare new permissions
         /* BEGIN MODULEBUILDER PERMISSIONS */
         $this->rights[$r][0] = $this->numero + $r; // Permission id (must not be already used)
-        $this->rights[$r][1] = 'Read objects of Sms77'; // Permission label
-        $this->rights[$r][4] = 'myobject'; // In php code, permission will be checked by test if ($user->rights->sms77->level1->level2)
-        $this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->sms77->level1->level2)
+        $this->rights[$r][1] = 'Read objects of Seven'; // Permission label
+        $this->rights[$r][4] = 'myobject'; // In php code, permission will be checked by test if ($user->rights->seven->level1->level2)
+        $this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->seven->level1->level2)
         $r++;
         $this->rights[$r][0] = $this->numero + $r; // Permission id (must not be already used)
-        $this->rights[$r][1] = 'Create/Update objects of Sms77'; // Permission label
-        $this->rights[$r][4] = 'myobject'; // In php code, permission will be checked by test if ($user->rights->sms77->level1->level2)
-        $this->rights[$r][5] = 'write'; // In php code, permission will be checked by test if ($user->rights->sms77->level1->level2)
+        $this->rights[$r][1] = 'Create/Update objects of Seven'; // Permission label
+        $this->rights[$r][4] = 'myobject'; // In php code, permission will be checked by test if ($user->rights->seven->level1->level2)
+        $this->rights[$r][5] = 'write'; // In php code, permission will be checked by test if ($user->rights->seven->level1->level2)
         $r++;
         $this->rights[$r][0] = $this->numero + $r; // Permission id (must not be already used)
-        $this->rights[$r][1] = 'Delete objects of Sms77'; // Permission label
-        $this->rights[$r][4] = 'myobject'; // In php code, permission will be checked by test if ($user->rights->sms77->level1->level2)
-        $this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->sms77->level1->level2)
+        $this->rights[$r][1] = 'Delete objects of Seven'; // Permission label
+        $this->rights[$r][4] = 'myobject'; // In php code, permission will be checked by test if ($user->rights->seven->level1->level2)
+        $this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->seven->level1->level2)
         $r++;
         /* END MODULEBUILDER PERMISSIONS */
 
@@ -198,14 +198,14 @@ class modSms77 extends DolibarrModules {
         $this->menu[$r++] = [
             'fk_menu' => '', // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
             'type' => 'top', // This is a Top menu entry
-            'titre' => 'ModuleSms77Name',
-            'mainmenu' => 'sms77',
+            'titre' => 'ModuleSevenName',
+            'mainmenu' => 'seven',
             'leftmenu' => '',
-            'url' => '/sms77/sms77index.php',
-            'langs' => 'sms77@sms77', // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+            'url' => '/seven/sevenindex.php',
+            'langs' => 'seven@seven', // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
             'position' => 1000 + $r,
-            'enabled' => '$conf->sms77->enabled', // Define condition to show or hide menu entry. Use '$conf->sms77->enabled' if entry must be visible if module is enabled.
-            'perms' => '1', // Use 'perms'=>'$user->rights->sms77->myobject->read' if you want your menu with a permission rules
+            'enabled' => '$conf->seven->enabled', // Define condition to show or hide menu entry. Use '$conf->seven->enabled' if entry must be visible if module is enabled.
+            'perms' => '1', // Use 'perms'=>'$user->rights->seven->myobject->read' if you want your menu with a permission rules
             'target' => '',
             'user' => 2, // 0=Menu for internal users, 1=external users, 2=both
         ];
@@ -222,7 +222,7 @@ class modSms77 extends DolibarrModules {
     public function init($options = '') {
         global $conf, $langs;
 
-        $result = $this->_load_tables('/sms77/sql/');
+        $result = $this->_load_tables('/seven/sql/');
         if ($result < 0) return -1; // Do not activate module if error 'not allowed' returned when loading module SQL queries (the _load_table run sql with run_sql with the error allowed parameter set to 'default')
 
         // Permissions
@@ -231,15 +231,15 @@ class modSms77 extends DolibarrModules {
         $sql = [];
 
         // Document templates
-        $moduledir = 'sms77';
+        $moduledir = 'seven';
         $myTmpObjects = [];
         $myTmpObjects['MyObject'] = ['includerefgeneration' => 0, 'includedocgeneration' => 0];
 
         foreach ($myTmpObjects as $myTmpObjectKey => $myTmpObjectArray) {
             if ($myTmpObjectKey == 'MyObject') continue;
             if ($myTmpObjectArray['includerefgeneration']) {
-                $src = DOL_DOCUMENT_ROOT . '/install/doctemplates/sms77/template_myobjects.odt';
-                $dirodt = DOL_DATA_ROOT . '/doctemplates/sms77';
+                $src = DOL_DOCUMENT_ROOT . '/install/doctemplates/seven/template_myobjects.odt';
+                $dirodt = DOL_DATA_ROOT . '/doctemplates/seven';
                 $dest = $dirodt . '/template_myobjects.odt';
 
                 if (file_exists($src) && !file_exists($dest)) {

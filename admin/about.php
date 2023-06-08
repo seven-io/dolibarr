@@ -17,9 +17,9 @@
  */
 
 /**
- * \file    sms77/admin/about.php
- * \ingroup sms77
- * \brief   About page of module Sms77.
+ * \file    seven/admin/about.php
+ * \ingroup seven
+ * \brief   About page of module Seven.
  */
 
 // Load Dolibarr environment
@@ -45,10 +45,10 @@ if (!$res) die("Include of main fails");
 // Libraries
 require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/functions2.lib.php';
-require_once '../lib/sms77.lib.php';
+require_once '../lib/seven.lib.php';
 
 // Translations
-$langs->loadLangs(["errors", "admin", "sms77@sms77"]);
+$langs->loadLangs(["errors", "admin", "seven@seven"]);
 
 // Access control
 if (!$user->admin) accessforbidden();
@@ -57,20 +57,20 @@ if (!$user->admin) accessforbidden();
 $action = GETPOST('action', 'aZ09');
 $backtopage = GETPOST('backtopage', 'alpha');
 $form = new Form($db);
-$page_name = "Sms77About";
+$page_name = "SevenAbout";
 llxHeader('', $langs->trans($page_name));
 
 // Subheader
 $linkback = '<a href="' . ($backtopage ? $backtopage : DOL_URL_ROOT . '/admin/modules.php?restore_lastsearch_values=1') . '">' . $langs->trans("BackToModuleList") . '</a>';
 
-echo load_fiche_titre($langs->trans($page_name), $linkback, 'object_sms77@sms77');
+echo load_fiche_titre($langs->trans($page_name), $linkback, 'object_seven@seven');
 
 // Configuration header
-echo dol_get_fiche_head(sms77AdminPrepareHead(), 'about', '', 0, 'sms77@sms77');
+echo dol_get_fiche_head(sevenAdminPrepareHead(), 'about', '', 0, 'seven@seven');
 
-dol_include_once('/sms77/core/modules/modSms77.class.php');
+dol_include_once('/seven/core/modules/modSeven.class.php');
 
-echo (new modSms77($db))->getDescLong();
+echo (new modSeven($db))->getDescLong();
 
 // Page end
 echo dol_get_fiche_end();

@@ -19,9 +19,9 @@
  */
 
 /**
- *    \file       sms77/sms77index.php
- *    \ingroup    sms77
- *    \brief      Home page of sms77 top menu
+ *    \file       seven/sevenindex.php
+ *    \ingroup    seven
+ *    \brief      Home page of seven top menu
  */
 
 global $conf, $db, $langs;
@@ -52,24 +52,24 @@ if (!$res) die('Include of main fails');
 
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.formfile.class.php';
 
-$sms77_apiKey = $conf->global->SMS77_API_KEY;
+$seven_apiKey = $conf->global->SEVEN_API_KEY;
 
-if (!$sms77_apiKey) {
-    header('Location: /custom/sms77/admin/setup.php?missingOptions='
-        . $langs->trans('SMS77_API_KEY'));
+if (!$seven_apiKey) {
+    header('Location: /custom/seven/admin/setup.php?missingOptions='
+        . $langs->trans('SEVEN_API_KEY'));
     exit;
 }
 
 $responses = [];
 
-function sms77_request($endpoint, array $data) {
-    global $sms77_apiKey;
-    $ch = curl_init('https://gateway.sms77.io/api/' . $endpoint);
+function seven_request($endpoint, array $data) {
+    global $seven_apiKey;
+    $ch = curl_init('https://gateway.seven.io/api/' . $endpoint);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array_merge($data, ['json' => 1])));
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         'Content-type: application/json',
         'SentWith: dolibarr',
-        'X-Api-Key: ' . $sms77_apiKey,
+        'X-Api-Key: ' . $seven_apiKey,
     ]);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $json = curl_exec($ch);
@@ -80,7 +80,7 @@ function sms77_request($endpoint, array $data) {
 /**
  * @return array<User>
  */
-function sms77_getMobileUsers() {
+function seven_getMobileUsers() {
     global $db;
 
     $users = [];
@@ -96,10 +96,10 @@ function sms77_getMobileUsers() {
 }
 
 if ('POST' === $_SERVER['REQUEST_METHOD']) {
-    $users = sms77_getMobileUsers();
+    $users = seven_getMobileUsers();
 
     if (count($users)) {
-        $text = $_POST['sms77_text'];
+        $text = $_POST['seven_text'];
         $requests = [];
         $matches = [];
         preg_match_all('{{{+[a-z]*_*[a-z]+}}}', $text, $matches);
@@ -131,39 +131,39 @@ if ('POST' === $_SERVER['REQUEST_METHOD']) {
         }
 
         $params = [];
-        $from = $_POST['sms77_from'];
+        $from = $_POST['seven_from'];
         if ('' !== $from && isset($from)) $params['from'] = $from;
 
-        $debug = $_POST['sms77_debug'];
+        $debug = $_POST['seven_debug'];
         if ('' !== $debug && isset($debug)) $params['debug'] = $debug;
 
-        if ('sms' === $_POST['sms77_msg_type']) {
-            $flash = $_POST['sms77_flash'];
+        if ('sms' === $_POST['seven_msg_type']) {
+            $flash = $_POST['seven_flash'];
             if ('' !== $flash && isset($flash)) $params['flash'] = $flash;
 
-            $pt = $_POST['sms77_performance_tracking'];
+            $pt = $_POST['seven_performance_tracking'];
             if ('' !== $pt && isset($pt)) $params['performance_tracking'] = $pt;
 
-            $nr = $_POST['sms77_no_reload'];
+            $nr = $_POST['seven_no_reload'];
             if ('' !== $nr && isset($nr)) $params['no_reload'] = $nr;
 
-            $label = isset($_POST['sms77_label']) ? $_POST['sms77_label'] : null;
+            $label = isset($_POST['seven_label']) ? $_POST['seven_label'] : null;
             if ($label) $params['label'] = $label;
 
-            $fid = isset($_POST['sms77_foreign_id']) ? $_POST['sms77_foreign_id'] : null;
+            $fid = isset($_POST['seven_foreign_id']) ? $_POST['seven_foreign_id'] : null;
             if ($fid) $params['foreign_id'] = $fid;
         } else {
-            $xml = $_POST['sms77_xml'];
+            $xml = $_POST['seven_xml'];
             if ('' !== $xml && isset($xml)) $params['xml'] = $xml;
         }
 
-        foreach ($requests as $request) $responses[] = sms77_request(
-                    $_POST['sms77_msg_type'], array_merge($params, $request));
+        foreach ($requests as $request) $responses[] = seven_request(
+                    $_POST['seven_msg_type'], array_merge($params, $request));
     }
     else $responses[] = $langs->trans('NoUsersWithMobileFound');
 }
 
-$langs->loadLangs(['sms77@sms77']); // Load translation files required by the page
+$langs->loadLangs(['seven@seven']); // Load translation files required by the page
 $action = GETPOST('action', 'aZ09');
 
 $socid = GETPOST('socid', 'int');
@@ -177,8 +177,8 @@ $now = dol_now();
 $form = new Form($db);
 $formfile = new FormFile($db);
 
-llxHeader('', $langs->trans('Sms77Area'));
-echo load_fiche_titre($langs->trans('Sms77Area'), '', 'sms77.png@sms77');
+llxHeader('', $langs->trans('SevenArea'));
+echo load_fiche_titre($langs->trans('SevenArea'), '', 'seven.png@seven');
 
 ?>
     <div class='fichecenter'>
@@ -186,45 +186,45 @@ echo load_fiche_titre($langs->trans('Sms77Area'), '', 'sms77.png@sms77');
             <code><?= $response ?></code>
         <?php endforeach; ?>
 
-        <form action='<?= $_SERVER['PHP_SELF'] ?>' id='sms77_msg' method='POST'>
+        <form action='<?= $_SERVER['PHP_SELF'] ?>' id='seven_msg' method='POST'>
             <p>
-                <label for='sms77_text'>
+                <label for='seven_text'>
                     <?= $langs->trans('Text') ?>
                 </label>
             </p>
-            <textarea id='sms77_text' maxlength='10000' name='sms77_text'
+            <textarea id='seven_text' maxlength='10000' name='seven_text'
                       required></textarea>
 
             <hr>
 
             <p><?= $langs->trans('SelectMessageType') ?></p>
             <label><?= $langs->trans('MessageTypeSms') ?>
-                <input checked name='sms77_msg_type' type='radio' value='sms'/>
+                <input checked name='seven_msg_type' type='radio' value='sms'/>
             </label>
 
             <label><?= $langs->trans('MessageTypeVoice') ?>
-                <input name='sms77_msg_type' type='radio' value='voice'/>
+                <input name='seven_msg_type' type='radio' value='voice'/>
             </label>
 
             <hr>
 
             <label><?= $langs->trans('From') ?><br>
-                <input maxlength='16' name='sms77_from'/>
+                <input maxlength='16' name='seven_from'/>
             </label>
 
-            <div id='sms77_wrap_label'>
+            <div id='seven_wrap_label'>
                 <hr>
 
                 <label><?= $langs->trans('Label') ?><br>
-                    <input maxlength='100' name='sms77_label'/>
+                    <input maxlength='100' name='seven_label'/>
                 </label>
             </div>
 
-            <div id='sms77_wrap_foreign_id'>
+            <div id='seven_wrap_foreign_id'>
                 <hr>
 
                 <label><?= $langs->trans('ForeignId') ?><br>
-                    <input maxlength='64' name='sms77_foreign_id'/>
+                    <input maxlength='64' name='seven_foreign_id'/>
                 </label>
             </div>
 
@@ -232,34 +232,34 @@ echo load_fiche_titre($langs->trans('Sms77Area'), '', 'sms77.png@sms77');
 
             <label>
                 <?= $langs->trans('Debug') ?><br>
-                <input type='checkbox' name='sms77_debug' value='1'/>
+                <input type='checkbox' name='seven_debug' value='1'/>
             </label>
 
-            <div id='sms77_wrap_flash'>
+            <div id='seven_wrap_flash'>
                 <label>
                     <?= $langs->trans('Flash') ?><br>
-                    <input type='checkbox' name='sms77_flash' value='1'/>
+                    <input type='checkbox' name='seven_flash' value='1'/>
                 </label>
             </div>
 
-            <div id='sms77_wrap_performance_tracking'>
+            <div id='seven_wrap_performance_tracking'>
                 <label>
                     <?= $langs->trans('PerformanceTracking') ?><br>
-                    <input type='checkbox' name='sms77_performance_tracking' value='1'/>
+                    <input type='checkbox' name='seven_performance_tracking' value='1'/>
                 </label>
             </div>
 
-            <div id='sms77_wrap_no_reload'>
+            <div id='seven_wrap_no_reload'>
                 <label>
                     <?= $langs->trans('NoReload') ?><br>
-                    <input type='checkbox' name='sms77_no_reload' value='1'/>
+                    <input type='checkbox' name='seven_no_reload' value='1'/>
                 </label>
             </div>
 
-            <div id='sms77_wrap_xml'>
+            <div id='seven_wrap_xml'>
                 <label>
                     <?= $langs->trans('XML') ?><br>
-                    <input type='checkbox' name='sms77_xml' value='1'/>
+                    <input type='checkbox' name='seven_xml' value='1'/>
                 </label>
             </div>
 
@@ -269,17 +269,17 @@ echo load_fiche_titre($langs->trans('Sms77Area'), '', 'sms77.png@sms77');
         </form>
     </div>
     <script>
-        var $text = document.getElementById('sms77_text')
-        var $xml = document.getElementById('sms77_wrap_xml')
+        var $text = document.getElementById('seven_text')
+        var $xml = document.getElementById('seven_wrap_xml')
         var smsEles = [
-            document.getElementById('sms77_wrap_flash'),
-            document.getElementById('sms77_wrap_performance_tracking'),
-            document.getElementById('sms77_wrap_no_reload'),
-            document.getElementById('sms77_wrap_label'),
-            document.getElementById('sms77_wrap_foreign_id')
+            document.getElementById('seven_wrap_flash'),
+            document.getElementById('seven_wrap_performance_tracking'),
+            document.getElementById('seven_wrap_no_reload'),
+            document.getElementById('seven_wrap_label'),
+            document.getElementById('seven_wrap_foreign_id')
         ]
 
-        Array.from(document.getElementsByName('sms77_msg_type'))
+        Array.from(document.getElementsByName('seven_msg_type'))
             .forEach(function(el) {
                 el.addEventListener('click', function(e) {
                     var isSMS = 'sms' === e.currentTarget.value

@@ -17,9 +17,9 @@
  */
 
 /**
- * \file    sms77/admin/setup.php
- * \ingroup sms77
- * \brief   Sms77 setup page.
+ * \file    seven/admin/setup.php
+ * \ingroup seven
+ * \brief   Seven setup page.
  */
 
 // Load Dolibarr environment
@@ -46,10 +46,10 @@ global $langs, $user;
 
 // Libraries
 require_once DOL_DOCUMENT_ROOT . "/core/lib/admin.lib.php";
-require_once '../lib/sms77.lib.php';
+require_once '../lib/seven.lib.php';
 
 // Translations
-$langs->loadLangs(["admin", "sms77@sms77"]);
+$langs->loadLangs(["admin", "seven@seven"]);
 
 // Access control
 if (!$user->admin) accessforbidden();
@@ -64,7 +64,7 @@ $scandir = GETPOST('scan_dir', 'alpha');
 $type = 'myobject';
 
 $arrayofparameters = [
-    'SMS77_API_KEY' => ['css' => 'minwidth200', 'enabled' => 1],
+    'SEVEN_API_KEY' => ['css' => 'minwidth200', 'enabled' => 1],
 ];
 
 $error = 0;
@@ -97,7 +97,7 @@ if ($action == 'updateMask') {
     $filefound = 0;
     $dirmodels = array_merge(['/'], (array)$conf->modules_parts['models']);
     foreach ($dirmodels as $reldir) {
-        $file = dol_buildpath($reldir . "core/modules/sms77/doc/pdf_" . $modele . "_" . strtolower($tmpobjectkey) . ".modules.php", 0);
+        $file = dol_buildpath($reldir . "core/modules/seven/doc/pdf_" . $modele . "_" . strtolower($tmpobjectkey) . ".modules.php", 0);
         if (file_exists($file)) {
             $filefound = 1;
             $classname = "pdf_" . $modele;
@@ -122,7 +122,7 @@ if ($action == 'updateMask') {
     // TODO Check if numbering module chosen can be activated by calling method canBeActivated
     $tmpobjectkey = GETPOST('object');
     if (!empty($tmpobjectkey)) {
-        $constforval = 'SMS77_' . strtoupper($tmpobjectkey) . "_ADDON";
+        $constforval = 'SEVEN_' . strtoupper($tmpobjectkey) . "_ADDON";
         dolibarr_set_const($db, $constforval, $value, 'chaine', 0, '', $conf->entity);
     }
 } // Activate a model
@@ -133,7 +133,7 @@ elseif ($action == 'del') {
     if ($ret > 0) {
         $tmpobjectkey = GETPOST('object');
         if (!empty($tmpobjectkey)) {
-            $constforval = 'SMS77_' . strtoupper($tmpobjectkey) . '_ADDON_PDF';
+            $constforval = 'SEVEN_' . strtoupper($tmpobjectkey) . '_ADDON_PDF';
             if ($conf->global->$constforval == "$value") dolibarr_del_const($db, $constforval, $conf->entity);
         }
     }
@@ -142,7 +142,7 @@ elseif ($action == 'setdoc') {
     $tmpobjectkey = GETPOST('object');
 
     if (!empty($tmpobjectkey)) {
-        $constforval = 'SMS77_' . strtoupper($tmpobjectkey) . '_ADDON_PDF';
+        $constforval = 'SEVEN_' . strtoupper($tmpobjectkey) . '_ADDON_PDF';
         if (dolibarr_set_const($db, $constforval, $value, 'chaine', 0, '', $conf->entity)) {
             // The constant that was read before the new set
             // We therefore requires a variable to have a coherent view
@@ -157,7 +157,7 @@ elseif ($action == 'setdoc') {
     $tmpobjectkey = GETPOST('object');
 
     if (!empty($tmpobjectkey)) {
-        $constforval = 'SMS77_' . strtoupper($tmpobjectkey) . '_ADDON_PDF';
+        $constforval = 'SEVEN_' . strtoupper($tmpobjectkey) . '_ADDON_PDF';
         dolibarr_del_const($db, $constforval, $conf->entity);
     }
 }
@@ -168,19 +168,19 @@ elseif ($action == 'setdoc') {
 
 $form = new Form($db);
 $dirmodels = array_merge(['/'], (array)$conf->modules_parts['models']);
-$page_name = "Sms77Setup";
+$page_name = "SevenSetup";
 llxHeader('', $langs->trans($page_name));
 
 // Subheader
 echo load_fiche_titre($langs->trans($page_name), '<a href="' .
     ($backtopage ?: DOL_URL_ROOT . '/admin/modules.php?restore_lastsearch_values=1')
-    . '">' . $langs->trans("BackToModuleList") . '</a>', 'object_sms77@sms77');
+    . '">' . $langs->trans("BackToModuleList") . '</a>', 'object_seven@seven');
 
 // Configuration header
-echo dol_get_fiche_head(sms77AdminPrepareHead(), 'settings', '', -1, "sms77@sms77");
+echo dol_get_fiche_head(sevenAdminPrepareHead(), 'settings', '', -1, "seven@seven");
 
 // Setup page goes here
-echo '<span class="opacitymedium">' . $langs->trans("Sms77SetupPage") . '</span><br><br>';
+echo '<span class="opacitymedium">' . $langs->trans("SevenSetupPage") . '</span><br><br>';
 
 if (isset($_GET['missingOptions']))
     echo $langs->trans('MissingOptions') . ' ' . $_GET['missingOptions'];
@@ -222,7 +222,7 @@ if ($action == 'edit') {
     echo '</div>';
 } else echo '<br>' . $langs->trans("NothingToSetup");
 
-$moduledir = 'sms77';
+$moduledir = 'seven';
 $myTmpObjects = [];
 $myTmpObjects['MyObject'] = ['includerefgeneration' => 0, 'includedocgeneration' => 0];
 
@@ -280,7 +280,7 @@ foreach ($myTmpObjects as $myTmpObjectKey => $myTmpObjectArray) {
                                 echo '</td>' . "\n";
 
                                 echo '<td class="center">';
-                                $constforvar = 'SMS77_' . strtoupper($myTmpObjectKey) . '_ADDON';
+                                $constforvar = 'SEVEN_' . strtoupper($myTmpObjectKey) . '_ADDON';
                                 if ($conf->global->$constforvar == $file)
                                     echo img_picto($langs->trans("Activated"), 'switch_on');
                                 else {
@@ -407,7 +407,7 @@ foreach ($myTmpObjects as $myTmpObjectKey => $myTmpObjectArray) {
                                     }
 
                                     echo '<td class="center">'; // Default
-                                    $constforvar = 'SMS77_' . strtoupper($myTmpObjectKey) . '_ADDON';
+                                    $constforvar = 'SEVEN_' . strtoupper($myTmpObjectKey) . '_ADDON';
                                     if ($conf->global->$constforvar == $name) {
                                         // Even if choice is the default value, we allow to disable it. Replace this with previous line if you need to disable unset
                                         echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=unsetdoc&amp;token=' . newToken() . '&amp;object=' . urlencode(strtolower($myTmpObjectKey)) . '&amp;value=' . $name . '&amp;scan_dir=' . $module->scandir . '&amp;label=' . urlencode($module->name) . '&amp;type=' . urlencode($type) . '" alt="' . $langs->trans("Disable") . '">' . img_picto($langs->trans("Enabled"), 'on') . '</a>';

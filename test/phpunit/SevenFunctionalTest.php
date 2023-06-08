@@ -17,8 +17,8 @@
  */
 
 /**
- * \file    test/phpunit/Sms77FunctionalTest.php
- * \ingroup sms77
+ * \file    test/phpunit/SevenFunctionalTest.php
+ * \ingroup seven
  * \brief   Example Selenium test.
  * Put detailed description here.
  */
@@ -28,16 +28,16 @@ namespace test\functional;
 use PHPUnit_Extensions_Selenium2TestCase_WebDriverException;
 
 /**
- * Class Sms77FunctionalTest
+ * Class SevenFunctionalTest
  * Requires chromedriver for Google Chrome
  * Requires geckodriver for Mozilla Firefox
  * @fixme Firefox (Geckodriver/Marionette) support
  * @todo Opera linux support
  * @todo Windows support (IE, Google Chrome, Mozilla Firefox, Safari)
  * @todo OSX support (Safari, Google Chrome, Mozilla Firefox)
- * @package Testsms77
+ * @package Testseven
  */
-class Sms77FunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase {
+class SevenFunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase {
     // TODO: move to a global configuration file?
     /** @var array Browsers to test with */
     public static $browsers = [
@@ -145,12 +145,12 @@ class Sms77FunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase {
         $module_status_image = $this->byXPath($module_status_image_path);
         if (strstr($module_status_image->attribute('src'), 'switch_off.png')) {
             // Enable the module
-            $this->byHref('modSms77')->click();
+            $this->byHref('modSeven')->click();
         } else {
             // Disable the module
-            $this->byHref('modSms77')->click();
+            $this->byHref('modSeven')->click();
             // Reenable the module
-            $this->byHref('modSms77')->click();
+            $this->byHref('modSeven')->click();
         }
         // Page reloaded, we need a new Xpath
         $module_status_image = $this->byXPath($module_status_image_path);
@@ -179,9 +179,9 @@ class Sms77FunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase {
      * @return bool
      */
     public function testConfigurationPage() {
-        $this->url('/custom/sms77/admin/setup.php');
+        $this->url('/custom/seven/admin/setup.php');
         $this->authenticate();
-        return $this->assertContains('sms77/admin/setup.php', $this->url(), 'Configuration page');
+        return $this->assertContains('seven/admin/setup.php', $this->url(), 'Configuration page');
     }
 
     /**
@@ -190,9 +190,9 @@ class Sms77FunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase {
      * @return bool
      */
     public function testAboutPage() {
-        $this->url('/custom/sms77/admin/about.php');
+        $this->url('/custom/seven/admin/about.php');
         $this->authenticate();
-        return $this->assertContains('sms77/admin/about.php', $this->url(), 'About page');
+        return $this->assertContains('seven/admin/about.php', $this->url(), 'About page');
     }
 
     /**
@@ -201,7 +201,7 @@ class Sms77FunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase {
      * @return bool
      */
     public function testAboutPageRendersMarkdownReadme() {
-        $this->url('/custom/sms77/admin/about.php');
+        $this->url('/custom/seven/admin/about.php');
         $this->authenticate();
         return $this->assertEquals(
             'Dolibarr Module Template (aka My Module)',
@@ -218,7 +218,7 @@ class Sms77FunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase {
     public function testBoxDeclared() {
         $this->url('/admin/boxes.php');
         $this->authenticate();
-        return $this->assertContains('sms77widget1', $this->source(), "Box enabled");
+        return $this->assertContains('sevenwidget1', $this->source(), "Box enabled");
     }
 
     /**
@@ -230,7 +230,7 @@ class Sms77FunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase {
         $this->url('/admin/triggers.php');
         $this->authenticate();
         return $this->assertContains(
-            'interface_99_modSms77_Sms77Triggers.class.php',
+            'interface_99_modSeven_SevenTriggers.class.php',
             $this->byTag('body')->text(),
             "Trigger declared"
         );
@@ -246,7 +246,7 @@ class Sms77FunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase {
         $this->authenticate();
         return $this->assertContains(
             'tick.png',
-            $this->byXPath('//td[text()="interface_99_modSms77_MyTrigger.class.php"]/following::img')->attribute('src'),
+            $this->byXPath('//td[text()="interface_99_modSeven_MyTrigger.class.php"]/following::img')->attribute('src'),
             "Trigger enabled"
         );
     }
