@@ -134,9 +134,6 @@ if ('POST' === $_SERVER['REQUEST_METHOD']) {
         $from = $_POST['seven_from'];
         if ('' !== $from && isset($from)) $params['from'] = $from;
 
-        $debug = $_POST['seven_debug'];
-        if ('' !== $debug && isset($debug)) $params['debug'] = $debug;
-
         if ('sms' === $_POST['seven_msg_type']) {
             $flash = $_POST['seven_flash'];
             if ('' !== $flash && isset($flash)) $params['flash'] = $flash;
@@ -229,11 +226,6 @@ echo load_fiche_titre($langs->trans('SevenArea'), '', 'seven.png@seven');
             </div>
 
             <hr>
-
-            <label>
-                <?= $langs->trans('Debug') ?><br>
-                <input type='checkbox' name='seven_debug' value='1'/>
-            </label>
 
             <div id='seven_wrap_flash'>
                 <label>

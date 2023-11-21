@@ -43,7 +43,6 @@ SevenAboutPage = seven "Über"-Seite
 #
 # Sample page
 #
-Debug = Debug
 Flash = Flash
 ForeignId = Foreign ID
 From = Absender
