@@ -68,12 +68,4 @@ From your browser:
 - You should now be able to find and enable the module
 
 
-## Licenses
-
-### Main code
-
-GPLv3 or (at your option) any later version. See file COPYING for more information.
-
-### Documentation
-
-All texts and readmes are licensed under GFDL.
+[![MIT](https://img.shields.io/badge/License-MIT-teal.svg)](LICENSE)

@@ -1,30 +1,5 @@
 <?php
-/* Copyright (C) 2004-2018  Laurent Destailleur     <eldy@users.sourceforge.net>
- * Copyright (C) 2018-2019  Nicolas ZABOURI         <info@inovea-conseil.com>
- * Copyright (C) 2019-2020  Frédéric France         <frederic.france@netlogic.fr>
- * Copyright (C) 2021 SuperAdmin
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <https://www.gnu.org/licenses/>.
- */
 
-/**
- *    \defgroup   seven     Module Seven
- *  \brief      Seven module descriptor.
- *  \file       htdocs/seven/core/modules/modSeven.class.php
- *  \ingroup    seven
- *  \brief      Description and activation file for module Seven
- */
 include_once DOL_DOCUMENT_ROOT . '/core/modules/DolibarrModules.class.php';
 
 /**
@@ -83,53 +58,31 @@ class modSeven extends DolibarrModules {
 
         // Define some features supported by module (triggers, login, substitutions, menus, css, etc...)
         $this->module_parts = [
-            // Set this to 1 if module has its own trigger directory (core/triggers)
-            'triggers' => 0,
-            // Set this to 1 if module has its own login method file (core/login)
-            'login' => 0,
-            // Set this to 1 if module has its own substitution function file (core/substitutions)
-            'substitutions' => 0,
-            // Set this to 1 if module has its own menus handler directory (core/menus)
-            'menus' => 0,
-            // Set this to 1 if module overwrite template dir (core/tpl)
-            'tpl' => 0,
-            // Set this to 1 if module has its own barcode directory (core/modules/barcode)
-            'barcode' => 0,
-            // Set this to 1 if module has its own models directory (core/modules/xxx)
-            'models' => 0,
-            // Set this to 1 if module has its own printing directory (core/modules/printing)
-            'printing' => 0,
-            // Set this to 1 if module has its own theme directory (theme)
-            'theme' => 0,
-            // Set this to relative path of css file if module has its own css file
-            'css' => [],
-            // Set this to relative path of js file if module must load a js on all pages
-            'js' => [],
-            // Set here all hooks context managed by module. To find available hook context, make a "grep -r '>initHooks(' *" on source code. You can also set hook context to 'all'
-            'hooks' => [
+            'triggers' => 0, // Set this to 1 if module has its own trigger directory (core/triggers)
+            'login' => 0, // Set this to 1 if module has its own login method file (core/login)
+            'substitutions' => 0, // Set this to 1 if module has its own substitution function file (core/substitutions)
+            'menus' => 0, // Set this to 1 if module has its own menus handler directory (core/menus)
+            'tpl' => 0, // Set this to 1 if module overwrite template dir (core/tpl)
+            'barcode' => 0, // Set this to 1 if module has its own barcode directory (core/modules/barcode)
+            'models' => 0, // Set this to 1 if module has its own models directory (core/modules/xxx)
+            'printing' => 0, // Set this to 1 if module has its own printing directory (core/modules/printing)
+            'theme' => 0, // Set this to 1 if module has its own theme directory (theme)
+            'css' => [], // Set this to relative path of css file if module has its own css file
+            'js' => [], // Set this to relative path of js file if module must load a js on all pages
+            'hooks' => [ // Set here all hooks context managed by module. To find available hook context, make a "grep -r '>initHooks(' *" on source code. You can also set hook context to 'all'
                 'usercard' => 'test123',
                 'globalcard' => 'test0rnbla',
                 'all' => 'blubbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
-                //   'data' => array(
-                //       'hookcontext1',
-                //       'hookcontext2',
-                //   ),
-                //   'entity' => '0',
             ],
-            // Set this to 1 if features of module are opened to external users
-            'moduleforexternal' => 0,
+            'moduleforexternal' => 0, // Set this to 1 if features of module are opened to external users
         ];
 
-        // Data directories to create when module is enabled.
-        // Example: this->dirs = array("/seven/temp","/seven/subdir");
-        $this->dirs = ["/seven/temp"];
+        $this->dirs = ["/seven/temp"]; // Data directories to create when module is enabled.
 
-        // Config pages. Put here list of php page, stored into seven/admin directory, to use to setup module.
-        $this->config_page_url = ["setup.php@seven"];
+        $this->config_page_url = ["setup.php@seven"]; // Config pages. Put here list of php page, stored into seven/admin directory, to use to setup module.
 
         // Dependencies
-        // A condition to hide module
-        $this->hidden = false;
+        $this->hidden = false; // A condition to hide module
         // List of module class names as string that must be enabled if this module is enabled. Example: array('always1'=>'modModuleToEnable1','always2'=>'modModuleToEnable2', 'FR1'=>'modModuleToEnableFR'...)
         $this->depends = [];
         $this->requiredby = []; // List of module class names as string to disable if this one is disabled. Example: array('modModuleToDisable1', ...)
@@ -153,12 +106,9 @@ class modSeven extends DolibarrModules {
             $conf->seven->enabled = 0;
         }
 
-        // Array to add new pages in new tabs
-        $this->tabs = [];
+        $this->tabs = []; // Array to add new pages in new tabs
 
-
-        // Dictionaries
-        $this->dictionaries = [];
+        $this->dictionaries = []; // Dictionaries
 
         // Boxes/Widgets
         // Add here list of php file(s) stored in seven/core/boxes that contains a class to show a widget.
