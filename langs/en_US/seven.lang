@@ -14,7 +14,7 @@ SevenSetup = seven setup
 Settings = Settings
 SevenSetupPage = seven setup page
 SEVEN_API_KEY = API Key
-SEVEN_API_KEYTooltip = Required for sending messages
+SEVEN_API_KEYTooltip = Required for sending messages - see https://help.seven.io/en/api-key-access
 MissingOptions = Please submit the following required options before proceeding:
 
 
@@ -40,4 +40,6 @@ PerformanceTracking = Performance tracking
 SelectMessageType = Select a message type
 Send = Send message
 Text = Message text
-XML = XML
+
+SEVEN_API_KEY_SMS_FROM = Sender ID
+SEVEN_API_KEY_SMS_FROMTooltip = The sender ID to use when sending SMS messages, up to 11 alphanumeric or 16 numeric characters.

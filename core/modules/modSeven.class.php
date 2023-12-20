@@ -7,23 +7,21 @@ include_once DOL_DOCUMENT_ROOT . '/core/modules/DolibarrModules.class.php';
  */
 class modSeven extends DolibarrModules {
     /**
-     * Constructor. Define names, constants, directories, boxes, permissions
      * @param DoliDB $db Database handler
      */
     public function __construct($db) {
         global $langs, $conf;
         $this->db = $db;
 
-        // Id for module (must be unique).
+        // ID for module (must be unique).
         // Use here a free id (See in Home -> System information -> Dolibarr for list of used modules id).
-        $this->numero = 500000; // TODO Go on page https://wiki.dolibarr.org/index.php/List_of_modules_id to reserve an id number for your module
+        $this->numero = 500000; // TODO: Go to https://wiki.dolibarr.org/index.php/List_of_modules_id to reserve an id number for the module
 
-        // Key text used to identify module (for permissions, menus, etc...)
-        $this->rights_class = 'seven';
+        $this->rights_class = 'seven'; // Key text used to identify module (for permissions, menus, etc...)
 
         // Family can be 'base' (core modules),'crm','financial','hr','projects','products','ecm','technic' (transverse modules),'interface' (link with external tools),'other','...'
         // It is used to group modules by family in module setup page
-        $this->family = "other";
+        $this->family = 'other';
 
         // Module position in the family on 2 digits ('01', '10', '20', ...)
         $this->module_position = '90';
@@ -34,16 +32,16 @@ class modSeven extends DolibarrModules {
         $this->name = preg_replace('/^mod/i', '', get_class($this));
 
         // Module description, used if translation string 'ModuleSevenDesc' not found (Seven is name of module).
-        $this->description = "SevenDescription";
+        $this->description = 'SevenDescription';
         // Used only if file README.md and README-LL.md not found.
-        $this->descriptionlong = "SevenDescription";
+        $this->descriptionlong = 'SevenDescription';
 
         // Author
         $this->editor_name = 'seven communications GmbH & Co. KG';
         $this->editor_url = 'https://www.seven.io';
 
         // Possible values for version are: 'development', 'experimental', 'dolibarr', 'dolibarr_deprecated' or a version string like 'x.y.z'
-        $this->version = '1.0';
+        $this->version = '1.1';
         // Url to the file with your last numberversion of this module
         //$this->url_last_version = 'http://www.example.com/versionmodule.txt';
 
@@ -54,32 +52,30 @@ class modSeven extends DolibarrModules {
         // If file is in theme/yourtheme/img directory under name object_pictovalue.png, use this->picto='pictovalue'
         // If file is in module/img directory under name object_pictovalue.png, use this->picto='pictovalue@module'
         // To use a supported fa-xxx css style of font awesome, use this->picto='xxx'
-        $this->picto = 'generic';
+        $this->picto = 'seven@seven'; // generic
 
-        // Define some features supported by module (triggers, login, substitutions, menus, css, etc...)
-        $this->module_parts = [
-            'triggers' => 0, // Set this to 1 if module has its own trigger directory (core/triggers)
-            'login' => 0, // Set this to 1 if module has its own login method file (core/login)
-            'substitutions' => 0, // Set this to 1 if module has its own substitution function file (core/substitutions)
-            'menus' => 0, // Set this to 1 if module has its own menus handler directory (core/menus)
-            'tpl' => 0, // Set this to 1 if module overwrite template dir (core/tpl)
+        $this->module_parts = [ // Define some features supported by module (triggers, login, substitutions, menus, css, etc...)
             'barcode' => 0, // Set this to 1 if module has its own barcode directory (core/modules/barcode)
-            'models' => 0, // Set this to 1 if module has its own models directory (core/modules/xxx)
-            'printing' => 0, // Set this to 1 if module has its own printing directory (core/modules/printing)
-            'theme' => 0, // Set this to 1 if module has its own theme directory (theme)
             'css' => [], // Set this to relative path of css file if module has its own css file
+			'dir' => array(),
+			'hooks' => [],
             'js' => [], // Set this to relative path of js file if module must load a js on all pages
-            'hooks' => [ // Set here all hooks context managed by module. To find available hook context, make a "grep -r '>initHooks(' *" on source code. You can also set hook context to 'all'
-                'usercard' => 'test123',
-                'globalcard' => 'test0rnbla',
-                'all' => 'blubbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
-            ],
-            'moduleforexternal' => 0, // Set this to 1 if features of module are opened to external users
+            'login' => 0, // Set this to 1 if module has its own login method file (core/login)
+            'menus' => 0, // Set this to 1 if module has its own menus handler directory (core/menus)
+            'models' => 0, // Set this to 1 if module has its own models directory (core/modules/xxx)
+			'moduleforexternal' => 0, // Set this to 1 if features of module are opened to external users
+            'printing' => 0, // Set this to 1 if module has its own printing directory (core/modules/printing)
+			'sms' => 1,
+            'substitutions' => 0, // Set this to 1 if module has its own substitution function file (core/substitutions)
+            'theme' => 0, // Set this to 1 if module has its own theme directory (theme)
+            'tpl' => 0, // Set this to 1 if module overwrite template dir (core/tpl)
+            'triggers' => 0, // Set this to 1 if module has its own trigger directory (core/triggers)
+			'workflow' => array(),
         ];
 
-        $this->dirs = ["/seven/temp"]; // Data directories to create when module is enabled.
+        $this->dirs = ['/seven/temp']; // Data directories to create when module is enabled.
 
-        $this->config_page_url = ["setup.php@seven"]; // Config pages. Put here list of php page, stored into seven/admin directory, to use to setup module.
+        $this->config_page_url = ['setup.php@seven']; // Config pages. Put here list of php page, stored into seven/admin directory, to use to setup module.
 
         // Dependencies
         $this->hidden = false; // A condition to hide module
@@ -88,8 +84,7 @@ class modSeven extends DolibarrModules {
         $this->requiredby = []; // List of module class names as string to disable if this one is disabled. Example: array('modModuleToDisable1', ...)
         $this->conflictwith = []; // List of module class names as string this module is in conflict with. Example: array('modModuleToDisable1', ...)
 
-        // The language file dedicated to your module
-        $this->langfiles = ["seven@seven"];
+        $this->langfiles = ['seven@seven']; // The language file dedicated to your module
 
         // Prerequisites
         $this->phpmin = [5, 5]; // Minimum version of PHP required by module
@@ -102,7 +97,7 @@ class modSeven extends DolibarrModules {
         $this->const = [];
 
         if (!isset($conf->seven) || !isset($conf->seven->enabled)) {
-            $conf->seven = new stdClass();
+            $conf->seven = new stdClass;
             $conf->seven->enabled = 0;
         }
 
@@ -118,8 +113,7 @@ class modSeven extends DolibarrModules {
         // unit_frequency must be 60 for minute, 3600 for hour, 86400 for day, 604800 for week
         $this->cronjobs = [];
 
-        // Permissions provided by this module
-        $this->rights = [];
+        $this->rights = []; // Permissions provided by this module
         $r = 0;
         // Add here entries to declare new permissions
         /* BEGIN MODULEBUILDER PERMISSIONS */
@@ -146,17 +140,19 @@ class modSeven extends DolibarrModules {
         // Add here entries to declare new menus
         /* BEGIN MODULEBUILDER TOPMENU */
         $this->menu[$r++] = [
+			//'enabled' => 1,
+            'enabled' => (bool)$conf->seven->enabled, // Define condition to show or hide menu entry. Use '$conf->seven->enabled' if entry must be visible if module is enabled.
             'fk_menu' => '', // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-            'type' => 'top', // This is a Top menu entry
-            'titre' => 'ModuleSevenName',
-            'mainmenu' => 'seven',
-            'leftmenu' => '',
-            'url' => '/seven/sevenindex.php',
             'langs' => 'seven@seven', // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-            'position' => 1000 + $r,
-            'enabled' => '$conf->seven->enabled', // Define condition to show or hide menu entry. Use '$conf->seven->enabled' if entry must be visible if module is enabled.
+            'leftmenu' => '',
+            'mainmenu' => 'seven',
             'perms' => '1', // Use 'perms'=>'$user->rights->seven->myobject->read' if you want your menu with a permission rules
+            'position' => 1000 + $r,
             'target' => '',
+			'title' => 'ModuleSevenName',
+            'titre' => 'ModuleSevenName',
+            'type' => 'top', // This is a Top menu entry
+            'url' => '/seven/sevenindex.php',
             'user' => 2, // 0=Menu for internal users, 1=external users, 2=both
         ];
         /* END MODULEBUILDER TOPMENU */
@@ -197,7 +193,7 @@ class modSeven extends DolibarrModules {
                     dol_mkdir($dirodt);
                     $result = dol_copy($src, $dest, 0, 0);
                     if ($result < 0) {
-                        $langs->load("errors");
+                        $langs->load('errors');
                         $this->error = $langs->trans('ErrorFailToCopyFile', $src, $dest);
                         return 0;
                     }

@@ -121,13 +121,10 @@ class SevenFunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase {
         $module_status_image_path = '//a[contains(@href, "' . self::$module_id . '")]/img';
         $module_status_image = $this->byXPath($module_status_image_path);
         if (strstr($module_status_image->attribute('src'), 'switch_off.png')) {
-            // Enable the module
-            $this->byHref('modSeven')->click();
+            $this->byHref('modSeven')->click(); // Enable the module
         } else {
-            // Disable the module
-            $this->byHref('modSeven')->click();
-            // Reenable the module
-            $this->byHref('modSeven')->click();
+            $this->byHref('modSeven')->click(); // Disable the module
+            $this->byHref('modSeven')->click(); // Reenable the module
         }
         // Page reloaded, we need a new Xpath
         $module_status_image = $this->byXPath($module_status_image_path);

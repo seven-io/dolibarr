@@ -14,7 +14,7 @@ SevenSetup = seven Setup
 Settings = Einstellungen
 SevenSetupPage = seven Setup-Seite
 SEVEN_API_KEY = API-Schlüssel
-SEVEN_API_KEYTooltip = Erforderlich für Nachrichtenversand
+SEVEN_API_KEYTooltip = Erforderlich für Nachrichtenversand - siehe https://help.seven.io/de/api-key-zugriff
 MissingOptions = Bitte die folgenden erforderlichen Optionen ausfüllen um fortfahren zu können:
 
 
@@ -39,5 +39,4 @@ NoUsersWithMobileFound = Keine Nutzer mit Mobilfunknummer gefunden mit der gegeb
 PerformanceTracking = Performance Tracking
 SelectMessageType = Nachrichtentyp auswählen
 Send = Nachricht versenden
-Text = Nachrichtinhalt
-XML = XML
+Text = Nachrichteninhalt
