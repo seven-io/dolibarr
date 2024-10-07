@@ -1,0 +1,5 @@
+{
+  "require": {
+    "seven.io/api": "v5.0.0"
+  }
+}
