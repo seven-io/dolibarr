@@ -2,9 +2,9 @@
 
 class SevenApi {
 	/**
-	 * @return array<User>
+	 * @return User[]
 	 */
-	function getMobileUsers() {
+	function getMobileUsers(): array {
 		global $db;
 
 		$users = [];
@@ -12,7 +12,6 @@ class SevenApi {
 		$User->fetchAll();
 
 		foreach ($User->users as $user) {
-			/** @var User $user */
 			if ('' !== $user->user_mobile) $users[] = $user;
 		}
 
@@ -42,7 +41,7 @@ class SevenApi {
 	}
 
 	/** @noinspection PhpUnused */
-	function voice(array $data) {
+	function voice(array $data): array {
 		$responses = [];
 
 		foreach (explode(',', $data['to']) as $to) {

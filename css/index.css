@@ -1,0 +1,54 @@
+.seven-table {
+	width: auto;
+}
+
+.seven-table tbody tr td label {
+	display: block;
+}
+
+.seven-table tbody tr td:first-child {
+	vertical-align: top;
+	text-align: left;
+}
+
+table.smsGenericTable th a {
+	color: #005D33;
+	text-decoration: none;
+}
+
+table.smsGenericTable {
+	background: #fff;
+	border: 1px solid #519973;
+	width: 100%;
+}
+
+table.smsGenericTable {
+	border-width: 0;
+}
+
+table.smsGenericTable table {
+	border-width: 1px;
+}
+
+table.smsGenericTable thead th,
+table.smsGenericTable th {
+	background: #CFD8C3;
+	border-bottom: 1px solid #519973;
+	border-right: 1px solid #519973;
+	padding-right: 10px;
+	text-align: left;
+}
+
+table.smsGenericTable thead th a {
+	display: block;
+}
+
+table.smsGenericTable tfoot td {
+	border-top: 1px solid #519973;
+}
+
+table.smsGenericTable td, table.smsGenericTable th {
+	border: 1px solid #519973;
+	padding: 5px 10px;
+	vertical-align: top;
+}

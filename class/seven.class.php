@@ -1,27 +1,28 @@
 <?php /** @noinspection PhpUnused */
 
 class Seven extends CommonObject {
-	var $class = '';
-	var $deferred = '';
-	var $dest = '';
+	var string $class = '';
+	var string $deferred = '';
+	var string $dest = '';
 	var $error;
-	var $expe = '';
-	var $message = '';
-	var $priority = '';
-	var $timeDrift = 0;
+	var string $expe = '';
+	var string $message = '';
+	var string $priority = '';
+	var int $timeDrift = 0;
 
 	function __construct($DB) {
 	}
 
-	function SmsSenderList() {
+	function SmsSenderList(): array {
 		global $conf;
 
 		$from = new stdClass;
 		$from->number = $conf->global->SEVEN_API_KEY_SMS_FROM ?: 'Dolibarr';
+
 		return [$from];
 	}
 
-	function SmsSend() {
+	function SmsSend(): int {
 		global $langs;
 
 		$langs->load('seven@seven');
@@ -49,5 +50,3 @@ class Seven extends CommonObject {
 		return 1;
 	}
 }
-
-?>

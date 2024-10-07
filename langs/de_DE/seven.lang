@@ -40,3 +40,5 @@ PerformanceTracking = Performance Tracking
 SelectMessageType = Nachrichtentyp auswählen
 Send = Nachricht versenden
 Text = Nachrichteninhalt
+
+seven_edit_sms_template = Edit SMS Template
