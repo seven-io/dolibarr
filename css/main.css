@@ -1,0 +1,108 @@
+.cc-floating {
+	max-width: 32%;
+	height: fit-content;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	padding: 1rem;
+	background: var(--white);
+	transition: all 0.4s ease-in;
+	margin: auto;
+	color: var(--black);
+	border-radius: 12px;
+	align-content: space-around;
+	flex-wrap: wrap;
+	align-items: stretch;
+}
+
+.mc-consent-overlay {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	background: rgba(128, 128, 128, 0.5);
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.fadeOutBottomRight {
+	animation: fadeOutBottomRight 1.0s forwards;
+	animation-duration: 2.0s;
+}
+
+@keyframes fadeOutBottomRight {
+	0% {
+		opacity: 1;
+		transform: translate(0);
+	}
+	100% {
+		opacity: 0;
+		transform: translateY(2500px) translateX(calc(100% + 250vw));
+	}
+}
+
+/*******************************************************************************
+*
+* Copyright Â© 2010 Micro Ocean Technologies Sdn. Bhd.
+*
+* SVN: $Id: style-green.css 1286 2011-06-16 07:42:17Z yenpin $
+*
+*******************************************************************************/
+
+/*
+ * ========================================================
+ * HTML elements
+ * ========================================================
+ */
+
+table.sms-generic-table th a {
+	color: #005D33;
+	text-decoration: none;
+}
+
+table.sms-generic-table {
+	background: #fff;
+	border: 1px solid #519973;
+	width: 100%;
+}
+
+table.sms-generic-table {
+	border-width: 0;
+}
+
+table.sms-generic-table table {
+	border-width: 1px;
+}
+
+table.sms-generic-table thead th,
+table.sms-generic-table th {
+	background: #CFD8C3;
+	border-bottom: 1px solid #519973;
+	border-right: 1px solid #519973;
+	padding-right: 10px;
+	text-align: left;
+}
+
+table.sms-generic-table thead th a {
+	display: block;
+}
+
+table.sms-generic-table tfoot td {
+	border-top: 1px solid #519973;
+}
+
+table.sms-generic-table td, table.sms-generic-table th {
+	border: 1px solid #519973;
+	padding: 5px 10px;
+	vertical-align: top;
+}
+
+
+
+
+

@@ -16,41 +16,39 @@ while ($i > 0 && $j > 0 && isset($tmp[$i]) && isset($tmp2[$j]) && $tmp[$i] == $t
 if (!$res && $i > 0 && file_exists(substr($tmp, 0, ($i + 1)) . "/main.inc.php")) $res = @include substr($tmp, 0, ($i + 1)) . "/main.inc.php";
 if (!$res && $i > 0 && file_exists(dirname(substr($tmp, 0, ($i + 1))) . "/main.inc.php")) $res = @include dirname(substr($tmp, 0, ($i + 1))) . "/main.inc.php";
 // Try main.inc.php using relative path
+if (!$res && file_exists("../main.inc.php")) $res = @include "../main.inc.php";
 if (!$res && file_exists("../../main.inc.php")) $res = @include "../../main.inc.php";
 if (!$res && file_exists("../../../main.inc.php")) $res = @include "../../../main.inc.php";
+if (!$res && file_exists("../../../../main.inc.php")) $res = @include "../../../../main.inc.php";
 if (!$res) die("Include of main fails");
+dol_include_once('/core/lib/admin.lib.php');
+dol_include_once('/seven/lib/SevenSMS.class.php');
+dol_include_once('/seven/core/helpers/helpers.php');
+dol_include_once("/seven/core/class/html.sevenformsms.class.php");
 
-// Libraries
-require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
-require_once DOL_DOCUMENT_ROOT . '/core/lib/functions2.lib.php';
-require_once '../lib/seven.lib.php';
+$langs->load("admin");
+$langs->load("sms");
+$langs->load("seven@seven");
+?>
 
-// Translations
-$langs->loadLangs(["errors", "admin", "seven@seven"]);
+<?php
+// Security check
+// Modified for PHP 8.X
+if (property_exists($user, "societe_id") && $user->societe_id > 0) {
+	accessforbidden();
+}
 
-// Access control
-if (!$user->admin) accessforbidden();
+llxHeader('', $langs->trans("seven Send SMS"));
 
-// Parameters
-$action = GETPOST('action', 'aZ09');
-$backtopage = GETPOST('backtopage', 'alpha');
-$form = new Form($db);
-$page_name = "SevenAbout";
-llxHeader('', $langs->trans($page_name));
+$form_sms = new SevenFormSms($db);
+$form_sms->handle_post_request();
 
-// Subheader
-$linkback = '<a href="' . ($backtopage ? $backtopage : DOL_URL_ROOT . '/admin/modules.php?restore_lastsearch_values=1') . '">' . $langs->trans("BackToModuleList") . '</a>';
+print_fiche_titre($langs->trans("Send SMS"), false, 'seven_32.png@seven'); // TODO: add to /img
 
-echo load_fiche_titre($langs->trans($page_name), $linkback, 'object_seven@seven');
+$form_sms->param["returnUrl"] = $_SERVER['REQUEST_URI'];
+$form_sms->param["action"] = "send_sms";
+$form_sms->show_form();
 
-// Configuration header
-echo dol_get_fiche_head(sevenAdminPrepareHead(), 'about', '', 0, 'seven@seven');
-
-dol_include_once('/seven/core/modules/modSeven.class.php');
-
-echo (new modSeven($db))->getDescLong();
-
-// Page end
-echo dol_get_fiche_end();
-llxFooter();
 $db->close();
+
+llxFooter();

@@ -21,9 +21,6 @@ if (!$res && $i > 0 && file_exists(dirname(substr($tmp, 0, ($i + 1))) . "/main.i
 	$res = @include dirname(substr($tmp, 0, ($i + 1))) . "/main.inc.php";
 }
 // Try main.inc.php using relative path
-if (!$res && file_exists("../main.inc.php")) {
-	$res = @include "../main.inc.php";
-}
 if (!$res && file_exists("../../main.inc.php")) {
 	$res = @include "../../main.inc.php";
 }
@@ -34,53 +31,39 @@ if (!$res) {
 	die("Include of main fails");
 }
 
-require_once DOL_DOCUMENT_ROOT . '/core/class/html.formfile.class.php';
+global $langs, $user, $conf, $db;
 
+// Libraries
+require_once DOL_DOCUMENT_ROOT . "/core/lib/admin.lib.php";
+require_once '../lib/seven.lib.php';
+//require_once "../class/myclass.class.php";
 
-// Load translation files required by the page
-$langs->loadLangs(["seven@seven"]);
+// Translations
+$langs->loadLangs(["admin", "seven@seven"]);
 
-$action = GETPOST('action', 'aZ09');
+// Initialize technical object to manage hooks of page. Note that conf->hooks_modules contains array of hook context
+$hookmanager->initHooks(['sevensetup', 'globalsetup']);
 
-
-// Security check
-$socid = GETPOST('socid', 'int');
-if (isset($user->socid) && $user->socid > 0) {
-	$action = '';
-	$socid = $user->socid;
+// Access control
+if (!$user->rights->seven->permission->read) {
+	accessforbidden();
 }
-
-$max = 5;
-$now = dol_now();
-
 
 /*
  * Actions
  */
+dol_include_once("/seven/core/helpers/helpers.php");
+dol_include_once("/seven/core/controllers/settings/sms_outbox.setting.php");
+// Handle Update
 
-// None
-
+$setting = new SMS_SMSOutbox_Setting($db);
+$setting->post_request_handler();
 
 /*
- * View
- */
+* View
+*/
 
-$form = new Form($db);
-$formfile = new FormFile($db);
+// Setup page goes here
+$setting->render();
 
-llxHeader("", $langs->trans("SevenArea"));
-
-print load_fiche_titre($langs->trans("SevenArea"), '', 'seven.png@seven');
-
-print '<div class="fichecenter"><div class="fichethirdleft">';
-print '</div><div class="fichetwothirdright">';
-
-
-$NBMAX = $conf->global->MAIN_SIZE_SHORTLIST_LIMIT;
-$max = $conf->global->MAIN_SIZE_SHORTLIST_LIMIT;
-
-print '</div></div>';
-
-// End of page
-llxFooter();
 $db->close();

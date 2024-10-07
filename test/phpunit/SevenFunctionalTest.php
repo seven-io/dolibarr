@@ -5,244 +5,257 @@ namespace test\functional;
 use PHPUnit_Extensions_Selenium2TestCase_WebDriverException;
 
 /**
- * Class SevenFunctionalTest
  * Requires chromedriver for Google Chrome
  * Requires geckodriver for Mozilla Firefox
+ *
  * @fixme Firefox (Geckodriver/Marionette) support
  * @todo Opera linux support
  * @todo Windows support (IE, Google Chrome, Mozilla Firefox, Safari)
  * @todo OSX support (Safari, Google Chrome, Mozilla Firefox)
- * @package Testseven
+ *
+ * @package Testmseven
  */
 class SevenFunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase {
-    // TODO: move to a global configuration file?
-    /** @var array Browsers to test with */
-    public static $browsers = [
-        [
-            'browser' => 'Google Chrome on Linux',
-            'browserName' => 'chrome',
-            'sessionStrategy' => 'shared',
-            'desiredCapabilities' => [],
-        ],
-        // Geckodriver does not keep the session at the moment?!
-        // XPath selectors also don't seem to work
-        //array(
-        //    'browser' => 'Mozilla Firefox on Linux',
-        //    'browserName' => 'firefox',
-        //    'sessionStrategy' => 'shared',
-        //    'desiredCapabilities' => array(
-        //        'marionette' => true,
-        //    ),
-        //)
-    ];
-    /** @var string Base URL of the webserver under test */
-    protected static $base_url = 'http://dev.zenfusion.fr';
-    /**
-     * @var string Dolibarr admin username
-     * @see authenticate
-     */
-    protected static $dol_admin_user = 'admin';
-    /**
-     * @var string Dolibarr admin password
-     * @see authenticate
-     */
-    protected static $dol_admin_pass = 'admin'; // TODO: autodetect?
-    /** @var int Dolibarr module ID */
-    private static $module_id = 500000;
+	// TODO: move to a global configuration file?
+	/** @var string Base URL of the webserver under test */
+	protected static $base_url = 'http://dev.zenfusion.fr';
+	/**
+	 * @var string Dolibarr admin username
+	 * @see authenticate
+	 */
+	protected static $dol_admin_user = 'admin';
+	/**
+	 * @var string Dolibarr admin password
+	 * @see authenticate
+	 */
+	protected static $dol_admin_pass = 'admin';
+	/** @var int Dolibarr module ID */
+	private static $module_id = 500000; // TODO: autodetect?
 
-    /**
-     * Global test setup
-     * @return void
-     */
-    public static function setUpBeforeClass() {
-    }
+	/** @var array Browsers to test with */
+	public static $browsers = [
+		[
+			'browser' => 'Google Chrome on Linux',
+			'browserName' => 'chrome',
+			'sessionStrategy' => 'shared',
+			'desiredCapabilities' => []
+		],
+		// Geckodriver does not keep the session at the moment?!
+		// XPath selectors also don't seem to work
+		//array(
+		//    'browser' => 'Mozilla Firefox on Linux',
+		//    'browserName' => 'firefox',
+		//    'sessionStrategy' => 'shared',
+		//    'desiredCapabilities' => array(
+		//        'marionette' => true,
+		//    ),
+		//)
+	];
 
-    /**
-     * Global test teardown
-     * @return void
-     */
-    public static function tearDownAfterClass() {
-    }
+	/**
+	 * Helper function to select links by href
+	 *
+	 * @param string $value Href
+	 * @return mixed               Helper string
+	 */
+	protected function byHref($value) {
+		$anchor = null;
+		$anchors = $this->elements($this->using('tag name')->value('a'));
+		foreach ($anchors as $anchor) {
+			if (strstr($anchor->attribute('href'), $value)) {
+				break;
+			}
+		}
+		return $anchor;
+	}
 
-    /**
-     * Unit test setup
-     * @return void
-     */
-    public function setUp() {
-        $this->setSeleniumServerRequestsTimeout(3600);
-        $this->setBrowserUrl(self::$base_url);
-    }
+	/**
+	 * Global test setup
+	 * @return void
+	 */
+	public static function setUpBeforeClass() {
+	}
 
-    /**
-     * Test enabling developer mode
-     * @return bool
-     */
-    public function testEnableDeveloperMode() {
-        $this->url('/admin/const.php');
-        $this->authenticate();
-        $main_features_level_path = '//input[@value="MAIN_FEATURES_LEVEL"]/following::input[@type="text"]';
-        $main_features_level = $this->byXPath($main_features_level_path);
-        $main_features_level->clear();
-        $main_features_level->value('2');
-        $this->byName('update')->click();
-        // Page reloaded, we need a new XPath
-        $main_features_level = $this->byXPath($main_features_level_path);
-        return $this->assertEquals('2', $main_features_level->value(), "MAIN_FEATURES_LEVEL value is 2");
-    }
+	/**
+	 * Unit test setup
+	 * @return void
+	 */
+	public function setUp() {
+		$this->setSeleniumServerRequestsTimeout(3600);
+		$this->setBrowserUrl(self::$base_url);
+	}
 
-    /**
-     * Handle Dolibarr authentication
-     * @return void
-     */
-    private function authenticate() {
-        try {
-            if ($this->byId('login')) {
-                $login = $this->byId('username');
-                $login->clear();
-                $login->value('admin');
-                $password = $this->byId('password');
-                $password->clear();
-                $password->value('admin');
-                $this->byId('login')->submit();
-            }
-        } catch (PHPUnit_Extensions_Selenium2TestCase_WebDriverException $e) {
-            // Login does not exist. Assume we are already authenticated
-        }
-    }
+	/**
+	 * Verify pre conditions
+	 * @return void
+	 */
+	protected function assertPreConditions() {
+	}
 
-    /**
-     * Test enabling the module
-     * @depends testEnableDeveloperMode
-     * @return bool
-     */
-    public function testModuleEnabled() {
-        $this->url('/admin/modules.php');
-        $this->authenticate();
-        $module_status_image_path = '//a[contains(@href, "' . self::$module_id . '")]/img';
-        $module_status_image = $this->byXPath($module_status_image_path);
-        if (strstr($module_status_image->attribute('src'), 'switch_off.png')) {
-            $this->byHref('modSeven')->click(); // Enable the module
-        } else {
-            $this->byHref('modSeven')->click(); // Disable the module
-            $this->byHref('modSeven')->click(); // Reenable the module
-        }
-        // Page reloaded, we need a new Xpath
-        $module_status_image = $this->byXPath($module_status_image_path);
-        return $this->assertContains('switch_on.png', $module_status_image->attribute('src'), "Module enabled");
-    }
+	/**
+	 * Handle Dolibarr authentication
+	 * @return void
+	 */
+	private function authenticate() {
+		try {
+			if ($this->byId('login')) {
+				$login = $this->byId('username');
+				$login->clear();
+				$login->value('admin');
+				$password = $this->byId('password');
+				$password->clear();
+				$password->value('admin');
+				$this->byId('login')->submit();
+			}
+		} catch (PHPUnit_Extensions_Selenium2TestCase_WebDriverException $e) {
+			// Login does not exist. Assume we are already authenticated
+		}
+	}
 
-    /**
-     * Helper function to select links by href
-     * @param string $value Href
-     * @return mixed               Helper string
-     */
-    protected function byHref($value) {
-        $anchor = null;
-        $anchors = $this->elements($this->using('tag name')->value('a'));
-        foreach ($anchors as $anchor) {
-            if (strstr($anchor->attribute('href'), $value)) {
-                break;
-            }
-        }
-        return $anchor;
-    }
+	/**
+	 * Test enabling developer mode
+	 * @return bool
+	 */
+	public function testEnableDeveloperMode() {
+		$this->url('/admin/const.php');
+		$this->authenticate();
+		$main_features_level_path = '//input[@value="MAIN_FEATURES_LEVEL"]/following::input[@type="text"]';
+		$main_features_level = $this->byXPath($main_features_level_path);
+		$main_features_level->clear();
+		$main_features_level->value('2');
+		$this->byName('update')->click();
+		// Page reloaded, we need a new XPath
+		$main_features_level = $this->byXPath($main_features_level_path);
+		return $this->assertEquals('2', $main_features_level->value(), "MAIN_FEATURES_LEVEL value is 2");
+	}
 
-    /**
-     * Test access to the configuration page
-     * @depends testModuleEnabled
-     * @return bool
-     */
-    public function testConfigurationPage() {
-        $this->url('/custom/seven/admin/setup.php');
-        $this->authenticate();
-        return $this->assertContains('seven/admin/setup.php', $this->url(), 'Configuration page');
-    }
+	/**
+	 * Test enabling the module
+	 *
+	 * @depends testEnableDeveloperMode
+	 * @return bool
+	 */
+	public function testModuleEnabled() {
+		$this->url('/admin/modules.php');
+		$this->authenticate();
+		$module_status_image_path = '//a[contains(@href, "' . self::$module_id . '")]/img';
+		$module_status_image = $this->byXPath($module_status_image_path);
+		if (strstr($module_status_image->attribute('src'), 'switch_off.png')) {
+			// Enable the module
+			$this->byHref('modSeven')->click();
+		} else {
+			// Disable the module
+			$this->byHref('modSeven')->click();
+			// Reenable the module
+			$this->byHref('modSeven')->click();
+		}
+		// Page reloaded, we need a new Xpath
+		$module_status_image = $this->byXPath($module_status_image_path);
+		return $this->assertContains('switch_on.png', $module_status_image->attribute('src'), "Module enabled");
+	}
 
-    /**
-     * Test access to the about page
-     * @depends testConfigurationPage
-     * @return bool
-     */
-    public function testAboutPage() {
-        $this->url('/custom/seven/admin/about.php');
-        $this->authenticate();
-        return $this->assertContains('seven/admin/about.php', $this->url(), 'About page');
-    }
+	/**
+	 * Test access to the configuration page
+	 *
+	 * @depends testModuleEnabled
+	 * @return bool
+	 */
+	public function testConfigurationPage() {
+		$this->url('/custom/seven/admin/setup.php');
+		$this->authenticate();
+		return $this->assertContains('seven/admin/setup.php', $this->url(), 'Configuration page');
+	}
 
-    /**
-     * Test about page is rendering Markdown
-     * @depends testAboutPage
-     * @return bool
-     */
-    public function testAboutPageRendersMarkdownReadme() {
-        $this->url('/custom/seven/admin/about.php');
-        $this->authenticate();
-        return $this->assertEquals(
-            'Dolibarr Module Template (aka My Module)',
-            $this->byTag('h1')->text(),
-            "Readme title"
-        );
-    }
+	/**
+	 * Test access to the about page
+	 *
+	 * @depends testConfigurationPage
+	 * @return bool
+	 */
+	public function testAboutPage() {
+		$this->url('/custom/seven/admin/about.php');
+		$this->authenticate();
+		return $this->assertContains('seven/admin/about.php', $this->url(), 'About page');
+	}
 
-    /**
-     * Test box is properly declared
-     * @depends testModuleEnabled
-     * @return bool
-     */
-    public function testBoxDeclared() {
-        $this->url('/admin/boxes.php');
-        $this->authenticate();
-        return $this->assertContains('sevenwidget1', $this->source(), "Box enabled");
-    }
+	/**
+	 * Test about page is rendering Markdown
+	 *
+	 * @depends testAboutPage
+	 * @return bool
+	 */
+	public function testAboutPageRendersMarkdownReadme() {
+		$this->url('/custom/seven/admin/about.php');
+		$this->authenticate();
+		return $this->assertEquals(
+			'Dolibarr Module Template (aka My Module)',
+			$this->byTag('h1')->text(),
+			"Readme title"
+		);
+	}
 
-    /**
-     * Test trigger is properly enabled
-     * @depends testModuleEnabled
-     * @return bool
-     */
-    public function testTriggerDeclared() {
-        $this->url('/admin/triggers.php');
-        $this->authenticate();
-        return $this->assertContains(
-            'interface_99_modSeven_SevenTriggers.class.php',
-            $this->byTag('body')->text(),
-            "Trigger declared"
-        );
-    }
+	/**
+	 * Test box is properly declared
+	 *
+	 * @depends testModuleEnabled
+	 * @return bool
+	 */
+	public function testBoxDeclared() {
+		$this->url('/admin/boxes.php');
+		$this->authenticate();
+		return $this->assertContains('sevenwidget1', $this->source(), "Box enabled");
+	}
 
-    /**
-     * Test trigger is properly declared
-     * @depends testTriggerDeclared
-     * @return bool
-     */
-    public function testTriggerEnabled() {
-        $this->url('/admin/triggers.php');
-        $this->authenticate();
-        return $this->assertContains(
-            'tick.png',
-            $this->byXPath('//td[text()="interface_99_modSeven_MyTrigger.class.php"]/following::img')->attribute('src'),
-            "Trigger enabled"
-        );
-    }
+	/**
+	 * Test trigger is properly enabled
+	 *
+	 * @depends testModuleEnabled
+	 * @return bool
+	 */
+	public function testTriggerDeclared() {
+		$this->url('/admin/triggers.php');
+		$this->authenticate();
+		return $this->assertContains(
+			'interface_99_modSeven_SevenTriggers.class.php',
+			$this->byTag('body')->text(),
+			"Trigger declared"
+		);
+	}
 
-    /**
-     * Unit test teardown
-     * @return void
-     */
-    public function tearDown() {
-    }
+	/**
+	 * Test trigger is properly declared
+	 *
+	 * @depends testTriggerDeclared
+	 * @return bool
+	 */
+	public function testTriggerEnabled() {
+		$this->url('/admin/triggers.php');
+		$this->authenticate();
+		return $this->assertContains(
+			'tick.png',
+			$this->byXPath('//td[text()="interface_99_modSeven_MyTrigger.class.php"]/following::img')->attribute('src'),
+			"Trigger enabled"
+		);
+	}
 
-    /**
-     * Verify pre conditions
-     * @return void
-     */
-    protected function assertPreConditions() {
-    }
+	/**
+	 * Verify post conditions
+	 * @return void
+	 */
+	protected function assertPostConditions() {
+	}
 
-    /**
-     * Verify post conditions
-     * @return void
-     */
-    protected function assertPostConditions() {
-    }
+	/**
+	 * Unit test teardown
+	 * @return void
+	 */
+	public function tearDown() {
+	}
+
+	/**
+	 * Global test teardown
+	 * @return void
+	 */
+	public static function tearDownAfterClass() {
+	}
 }

@@ -1,45 +1,195 @@
-#
-# Generic
-#
+ModuleSevenAPIName = Seven
+ModuleSevenAPIDesc = Automate SMS notification and Send Bulk SMS
 
-# Module label 'ModuleSevenName'
-ModuleSevenName = seven
-# Module description 'ModuleSevenDesc'
-ModuleSevenDesc = Send SMS and make text-to-speech calls
+SevenAPISetup = Seven setup
 
-#
-# Admin page
-#
-SevenSetup = seven setup
 Settings = Settings
-SevenSetupPage = seven setup page
-SEVEN_API_KEY = API Key
-SEVEN_API_KEYTooltip = Required for sending messages - see https://help.seven.io/en/api-key-access
-MissingOptions = Please submit the following required options before proceeding:
+SevenAPISetupPage = Seven setup page
+SEVEN_API_KEY = Seven API Key
+SEVEN_API_KEYTooltip = Seven API Key required
+SEVEN_API_SECRET= Seven API Secret
+SEVEN_API_SECRETTooltip= Seven API Secret required
+SEVEN_FROM = Sender
+SEVEN_FROMTooltip = Sender/Caller ID
+SEVEN_CALLBACK_NUMBER = Callback number
+SEVEN_CALLBACK_NUMBER_TOOLTIP = Your number to receive calls. Please include country code eg: 11472536546
+SEVEN_ACTIVE_HOUR = Active hours to send SMS reminders
+SEVEN_ACTIVE_HOUR_TOOLTIP = SMS Reminders will be sent within the active hours.
 
+seven_menu_template_config_title = SMS Templates
+seven_menu_send_sms_title = Send SMS
+seven_menu_sms_logs_title = SMS Logs
+seven_menu_sms_outbox_title = SMS Outbox
 
-#
-# About page
-#
+setting_page_title = seven Settings
+setting_page_menu_title = SMS Settings
+third_party_page_title = Third Party Notification Settings
+contact_page_title = Contact Notification Settings
+logs_page_title=Logs
+invoice_page_title=Invoice Notification Settings
+propal_page_title=Proposal Notification Settings
+supplier_order_page_title=Supplier Order Notification Settings
+sales_order_page_title=Sales Order Notification Settings
+project_page_title=Project Notification Settings
+help_page_title=Help
+send_sms_page_title=Send SMS
+bulk_sms_page_title=Bulk SMS
+sms_template_page_title=SMS Template
+sms_outbox_page_title=SMS Outbox
+ticket_page_title=Ticket Notification Settings
+shipment_page_title=Shipment Notification Settings
+member_page_title=Member Notification Settings
+voice_call_logs_page_title = Voice Call Logs
+
+BulkSMSSettingPageTitle=Bulk SMS
+SMSTemplateSettingPageTitle=SMS Template
+SendSMSSettingPageTitle=Send SMS
+SMSOutboxSettingPageTitle=SMS Outbox
+LogsSettingPageTitle=Logs
+InvoiceSettingPageTitle=Invoice
+ProposalSettingPageTitle=Proposal
+ProjectSettingPageTitle=Project
+ThirdPartySettingPageTitle=Third Party
+ContactSettingPageTitle=Contact
+HelpSettingPageTitle=Help
+SupplierOrderSettingPageTitle=Supplier Order
+SalesOrderSettingPageTitle=Sales Order
+TicketSettingPageTitle=Ticket
+ShipmentSettingPageTitle=Shipment
+MemberSettingPageTitle=Member
+VoiceCallSettingPageTitle=Voice Call Logs
+
+sms_form_save = Save SMS settings
+sms_form_enable_notification = Enable SMS notification
+sms_form_send_from = Sender
+sms_form_send_on = Send notifications on
+sms_form_send_reminder = Send reminder
+sms_form_sms_templates = SMS templates
+
+seven_third_party_enable = Enable
+seven_third_party_send_on_created = Third party created
+seven_third_party_send_on_email_sent = Third party email sent
+seven_third_party_sms_templates_created = Third party created SMS template
+seven_third_party_sms_templates_email_sent = Third party email sent SMS template
+
+seven_contact_enable = Enable
+seven_contact_send_on_created = Contact created
+seven_contact_send_on_enabledisabled = Contact enabled / disabled
+seven_contact_sms_templates_created = Contact created SMS template
+seven_contact_sms_templates_enabledisabled = Contact enabled / disabled SMS template
+
+seven_propal_enable = Enable
+seven_propal_send_on_created = Proposal created
+seven_propal_send_on_validated = Proposal validated
+seven_propal_send_on_updated = Proposal updated
+seven_propal_send_on_close_signed = Proposal close signed
+seven_propal_send_on_close_refused = Proposal close refused
+seven_propal_sms_templates_created = Proposal created SMS template
+seven_propal_sms_templates_validated = Proposal validated SMS template
+seven_propal_sms_templates_updated = Proposal updated SMS template
+seven_propal_sms_templates_close_signed = Proposal close signed SMS template
+seven_propal_sms_templates_close_refused = Proposal close refused SMS template
+
+seven_invoice_enable = Enable
+seven_invoice_send_on_created = Invoice created
+seven_invoice_send_on_updated = Invoice updated
+seven_invoice_send_on_validated = Invoice validated
+seven_invoice_send_on_cancelled = Invoice abandoned / cancelled
+seven_invoice_send_on_paid = Invoice paid
+seven_invoice_send_on_unpaid = Invoice unpaid
+seven_invoice_sms_templates_created = Invoice created SMS template
+seven_invoice_sms_templates_updated = Invoice updated SMS template
+seven_invoice_sms_templates_validated = Invoice validated SMS template
+seven_invoice_sms_templates_cancelled = Invoice cancelled / abandoned SMS template
+seven_invoice_sms_templates_paid = Invoice paid SMS template
+seven_invoice_sms_templates_unpaid = Invoice unpaid SMS template
+
+seven_sales_order_enable = Enable
+seven_sales_order_send_on_created                = Sales order created
+seven_sales_order_send_on_validated              = Sales order validated
+seven_sales_order_send_on_modified               = Sales order modified
+seven_sales_order_send_on_deleted                = Sales order deleted
+seven_sales_order_send_on_canceled               = Sales order canceled
+seven_sales_order_send_on_classify_billed        = Sales order classify billed
+seven_sales_order_sms_templates_created          = Sales order created SMS template
+seven_sales_order_sms_templates_validated        = Sales order validated SMS template
+seven_sales_order_sms_templates_modified         = Sales order modified SMS template
+seven_sales_order_sms_templates_deleted          = Sales order deleted SMS template
+seven_sales_order_sms_templates_canceled         = Sales order canceled SMS template
+seven_sales_order_sms_templates_classify_billed  = Sales order classify billed SMS template
+
+seven_supplier_order_enable = Enable
+seven_supplier_order_send_on_created           = Supplier order created
+seven_supplier_order_send_on_validated         = Supplier order validated
+seven_supplier_order_send_on_approved          = Supplier order approved
+seven_supplier_order_send_on_refused           = Supplier order refused
+seven_supplier_order_send_on_dispatched        = Supplier order dispatched
+seven_supplier_order_sms_templates_created     = Supplier order created SMS template
+seven_supplier_order_sms_templates_validated   = Supplier order validated SMS template
+seven_supplier_order_sms_templates_approved    = Supplier order approved SMS template
+seven_supplier_order_sms_templates_refused     = Supplier order refused SMS template
+seven_supplier_order_sms_templates_dispatched  = Supplier order dispatched SMS template
+
+seven_ticket_enable = Enable
+seven_ticket_send_on_created         = Ticket created
+seven_ticket_send_on_closed          = Ticket closed
+seven_ticket_send_on_read            = Ticket read
+seven_ticket_send_on_abandoned       = Ticket abandoned
+seven_ticket_send_on_assigned        = Ticket assigned
+seven_ticket_sms_templates_created   = Ticket created SMS template
+seven_ticket_sms_templates_closed    = Ticket closed SMS template
+seven_ticket_sms_templates_read      = Ticket read SMS template
+seven_ticket_sms_templates_abandoned = Ticket abandoned SMS template
+seven_ticket_sms_templates_assigned  = Ticket assigned SMS template
+
+seven_shipment_enable = Enable
+seven_shipment_send_on_created         = Shipment created
+seven_shipment_send_on_validated       = Shipment validated
+seven_shipment_send_on_closed          = Shipment closed
+seven_shipment_send_on_delivered       = Shipment delivered
+seven_shipment_sms_templates_created   = Shipment created SMS template
+seven_shipment_sms_templates_validated = Shipment validated SMS template
+seven_shipment_sms_templates_closed    = Shipment closed SMS template
+seven_shipment_sms_templates_delivered = Shipment delivered SMS template
+
+seven_member_enable = Enable
+seven_member_send_on_created                        = Member created
+seven_member_send_on_validated                      = Member validated
+seven_member_send_on_subscription_created           = Member new contribution
+seven_member_send_on_terminated                     = Member terminated
+seven_member_sms_templates_created                  = Member created SMS template
+seven_member_sms_templates_validated                = Member validated SMS template
+seven_member_sms_templates_subscription_created     = Member new contribution SMS template
+seven_member_sms_templates_terminated               = Member terminated SMS template
+
+seven_project_enable = Enable
+seven_project_send_on_prospection           = Lead status prospection
+seven_project_send_on_qualification         = Lead status qualification
+seven_project_send_on_proposal              = Lead status proposal
+seven_project_send_on_negotiation           = Lead status negotiation
+seven_project_sms_templates_prospection     = Lead status prospection SMS template
+seven_project_sms_templates_qualification   = Lead status qualification SMS template
+seven_project_sms_templates_proposal        = Lead status proposal SMS template
+seven_project_sms_templates_negotiation     = Lead status negotiation SMS template
+
+seven_sms_template_title = Title
+seven_sms_template_message = Message
+seven_sms_template_save = Save SMS Template
+
+SevenAPITabTitle   = Seven SMS
+SendSMSButtonTitle  = Send SMS
+SmsTo               = To
+SmsText             = Message
+SmsTemplate         = SMS Template
+Sms_To_Thirdparty_Flag = Send SMS to third party
+ScheduleSMSButtonTitle = Schedule SMS
+
+seven_voice_call_button_label = Seven - Call
+seven_voice_call_disabled_title = No callback number configured
+seven_voice_call_user_invalid_phone = User's phone number is invalid
+
 About = About
-SevenAbout = About seven
-SevenAboutPage = seven about page
+SevenAPIAbout = About Seven
+SevenAPIAboutPage = Seven about page
 
-#
-# Sample page
-#
-Flash = Flash
-ForeignId = Foreign ID
-From = From
-Label = Label
-MessageTypeSms = SMS
-MessageTypeVoice = Text-To-Speech
-NoReload = No Reload
-NoUsersWithMobileFound = No users matching the configuration has a mobile phone associated.
-PerformanceTracking = Performance tracking
-SelectMessageType = Select a message type
-Send = Send message
-Text = Message text
-
-SEVEN_API_KEY_SMS_FROM = Sender ID
-SEVEN_API_KEY_SMS_FROMTooltip = The sender ID to use when sending SMS messages, up to 11 alphanumeric or 16 numeric characters.
+savesetting = Save Settings
